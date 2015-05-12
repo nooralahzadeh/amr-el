@@ -27,7 +27,7 @@ def search(commonness_table):
         else:
             print 'null'
 
-def query(commonness_table, query, n=0):
+def query(commonness_table, query, n=0, score=True):
     results = list()
     if query in commonness_table:
         total = 0
@@ -36,21 +36,13 @@ def query(commonness_table, query, n=0):
         count = 0
         for title in sorted(commonness_table[query],
                             key=commonness_table[query].get, reverse=True):
-            score = float(commonness_table[query][title] / total)
-            results.append((title, score))
+            commonness_score = float(commonness_table[query][title] / total)
+            title = title.replace(' ', '_')
+            if score:
+                results.append((title, score))
+            else:
+                results.append(title)
             count += 1
             if count == n:
                 break
     return results
-
-# def subset():
-#     f = open('./output/commonness_table.pickle', 'rb')
-#     commonness_table = pickle.load(f)
-#     subset = dict()
-#     for line in open('./output/amr_mentions', 'r'):
-#         query = line.strip().lower()
-#         if query in commonness_table:
-#             print query
-#             subset[query] = dict()
-#             subset[query] = commonness_table[query]
-#     pickle.dump(subset, open('./output/commonness_table_subset.pickle', 'wb'))
