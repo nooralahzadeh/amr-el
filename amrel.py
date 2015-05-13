@@ -42,11 +42,19 @@ def linking(amr_table):
                                                    n=10, score=False)
                 candidates = results[query]
                 gold = urllib.unquote(ne.wiki_)
+
+                ### NULL
+                if len(candidates) == 0 and gold == 'NULL':
+                    for k in [1, 5, 10]:
+                        acc[k] += 1
+                    continue
+
+                ### non NULL
                 for k in [1, 5, 10]:
                     kcandidates = candidates[0:k]
                     if gold in kcandidates:
                         acc[k] += 1
-                    elif k == 1:
+                    elif k == 10:
                         err.write('%s\t%s\t%s\t%s\n\n' % (senid, ne.name(),
                                                           gold, candidates))
     for k in sorted(acc):
