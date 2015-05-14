@@ -6,13 +6,13 @@ sys.path.append('./lib/')
 from commonness import comread
 sys.path.append('./lib/amr-reader-master/amr/')
 from main import get_amr_table
+from Mention import Mention
 
 '''
  README
 
  - This simple EL system only has commonness ranking now.
- - Loading whole commonness table will take 10 mins, so I use a subset that
-   only contains mentions in AMR corpus
+
 '''
 
 def linking(amr_table):
@@ -22,6 +22,7 @@ def linking(amr_table):
     acc[10] = 0
     total = 0
     results = dict() # key: query, value: candidates
+                     # store results into memory
 
     for docid in sorted(amr_table):
         for senid in sorted(amr_table[docid]):
@@ -29,13 +30,14 @@ def linking(amr_table):
             named_entities = sen.named_entities_
             for i in named_entities:
                 ne = named_entities[i]
+                mention = Mention(ne) # NamedEntity -> Mention
 
                 ### PER ORG GPE only
-                if ne.maintype_ not in ['PER', 'ORG', 'GPE']:
+                if mention.maintype_ not in ['PER', 'ORG', 'GPE']:
                     continue
 
                 total += 1
-                query = ne.name().lower()
+                query = mention.name().lower()
                 if query not in results:
                     results[query] = list()
                     results[query] = comread.query(commonness_table, query,
@@ -55,14 +57,14 @@ def linking(amr_table):
                     if gold in kcandidates:
                         acc[k] += 1
                     elif k == 10:
-                        err.write('%s\t%s\t%s\t%s\n\n' % (senid, ne.name(),
+                        err.write('%s\t%s\t%s\t%s\n\n' % (senid, query,
                                                           gold, candidates))
     for k in sorted(acc):
         print '%d: %.2f' % (k, acc[k] / total * 100)
 
 if __name__ == '__main__':
     if len(sys.argv) != 3:
-        print 'USAGE: python amr_el.py <path of config file> ' \
+        print 'USAGE: python amrel.py <path of config file> ' \
             '<directory of AMR files>'
         sys.exit()
     else:
