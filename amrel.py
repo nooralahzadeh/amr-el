@@ -68,10 +68,26 @@ if __name__ == '__main__':
             '<directory of AMR files>'
         sys.exit()
     else:
+        err = open('error', 'w')
         config = open(sys.argv[1]).readlines()
         commonness_pickle_path = re.search('\<path of commonness table\>: (.+)',
                                            config[0].strip()).group(1)
         commonness_table = comread.read(commonness_pickle_path)
-        amr_table = get_amr_table(sys.argv[2])
-        err = open('error', 'w')
+
+        '''
+         AMR Named Entity query setting:
+
+         coref     - Adding name coreference
+         coherence - Adding coherent set
+         hor       - Adding have-org-rol-91
+         hrr       - Adding have-rel-rol-91
+         time      - Adding global time
+         loc       - Adding global location
+         sr        - Adding semantic role
+         chain     - Adding coreferential chain
+
+       '''
+        amr_table = get_amr_table(sys.argv[2], coref=True, coherence=True,
+                                  hor=True, hrr=True, time=True, loc=True,
+                                  sr=True, chain=True)
         linking(amr_table)
