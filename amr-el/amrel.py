@@ -2,11 +2,11 @@ from __future__ import division
 import sys
 import re
 import urllib
-sys.path.append('./lib/')
-from commonness import comread
-sys.path.append('./lib/amr-reader-master/amr/')
-from main import get_amr_table
-from Mention import Mention
+from src import commonness
+from src import dbtype
+from src import Mention
+sys.path.append('../lib/amr-reader-master/amr-reader/src')
+import amr
 
 '''
  README
@@ -15,7 +15,7 @@ from Mention import Mention
 
 '''
 
-def linking(amr_table):
+def linking():
     acc = dict()
     acc[1] = 0
     acc[5] = 0
@@ -30,7 +30,7 @@ def linking(amr_table):
             named_entities = sen.named_entities_
             for i in named_entities:
                 ne = named_entities[i]
-                mention = Mention(ne) # NamedEntity -> Mention
+                mention = Mention.Mention(ne) # NamedEntity -> Mention
 
                 ### PER ORG GPE only
                 if mention.maintype_ not in ['PER', 'ORG', 'GPE']:
@@ -40,8 +40,8 @@ def linking(amr_table):
                 query = mention.name().lower()
                 if query not in results:
                     results[query] = list()
-                    results[query] = comread.query(commonness_table, query,
-                                                   n=10, score=False)
+                    results[query] = commonness.query(commonness_table, query,
+                                                      n=10, score=False)
                 candidates = results[query]
                 gold = urllib.unquote(ne.wiki_)
 
@@ -68,11 +68,16 @@ if __name__ == '__main__':
             '<directory of AMR files>'
         sys.exit()
     else:
-        err = open('error', 'w')
+        err = open('el_error', 'w')
         config = open(sys.argv[1]).readlines()
-        commonness_pickle_path = re.search('\<path of commonness table\>: (.+)',
+        path_commonness_pickle = re.search('\<.+\>: (.+)',
                                            config[0].strip()).group(1)
-        commonness_table = comread.read(commonness_pickle_path)
+        path_db2amr_pickle = re.search('\<.+\>: (.+)',
+                                       config[1].strip()).group(1)
+        print 'loading...'
+        commonness_table = commonness.read(path_commonness_pickle)
+        db2amr = dbtype.read(path_db2amr_pickle)
+        print 'done.'
 
         '''
          AMR Named Entity query setting:
@@ -87,7 +92,8 @@ if __name__ == '__main__':
          chain     - Adding coreferential chain
 
        '''
-        amr_table = get_amr_table(sys.argv[2], coref=True, coherence=True,
-                                  hor=True, hrr=True, time=True, loc=True,
-                                  sr=True, chain=True)
-        linking(amr_table)
+        amr_table = amr.get_amr_table(sys.argv[2])
+        # amr_table = amr.get_amr_table(sys.argv[2], coref=True, coherence=True,
+        #                           hor=True, hrr=True, time=True, loc=True,
+        #                           sr=True, chain=True)
+        linking()

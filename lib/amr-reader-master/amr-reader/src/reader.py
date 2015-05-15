@@ -1,6 +1,7 @@
 '''
  AMR reader
 '''
+
 import re
 import os
 import sys
@@ -257,7 +258,7 @@ def main(input_):
         amr = '\n'.join(nline[2:]).strip()
 
         if amr_validator(amr) == False:
-            raise NameError('Invalid AMR Input: %s\n%s\n' % (senid, amr))
+            raise NameError('Invalid AMR Input: %s' % senid)
 
         amr_nodes_acr, graph = amr_reader(amr)
 

@@ -9,19 +9,6 @@ from src import ne
 from src import path
 from src import nequery
 
-def get_amr_table(input_path, coref=True, coherence=True, hor=True, hrr=True,
-                  time=True, loc=True, sr=True, chain=True):
-    raw_amr = list()
-    for i in os.listdir(input_path):
-        raw.read(input_path, i, raw_amr)
-    raw_amr = ''.join(raw_amr)
-
-    amr_table = reader.main(raw_amr)
-    ne.add_named_entity(amr_table)
-    nequery.main(amr_table, coref, coherence, hor, hrr, time, loc, sr, chain)
-
-    return amr_table
-
 if __name__ == '__main__':
     ### Arguments
     parser = argparse.ArgumentParser()
