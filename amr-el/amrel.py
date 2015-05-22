@@ -3,6 +3,7 @@ import sys
 import re
 import urllib
 from src import commonness
+from src import dbpedia
 from src import dbtype
 from src import Mention
 sys.path.append('../lib/amr-reader-master/amr-reader/src')
@@ -76,7 +77,7 @@ if __name__ == '__main__':
                                        config[1].strip()).group(1)
         print 'loading...'
         commonness_table = commonness.read(path_commonness_pickle)
-        db2amr = dbtype.read(path_db2amr_pickle)
+        # db2amr = dbtype.read(path_db2amr_pickle)
         print 'done.'
 
         '''
