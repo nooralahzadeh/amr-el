@@ -10,7 +10,7 @@ optional arguments:
       -g GRAPH, --graph GRAPH
                               output AMR graphs
                               GRAPH=n: normal graphs
-                              GRAPH=s: simple graphs
+                              GRAPH=s: simple graphs (without :instance label)
       -n, --node              output AMR nodes
       -p, --path              output AMR paths
       -e, --entity            output named entities
@@ -38,7 +38,8 @@ optional arguments:
 Graph:<br>
 
       Green Ellispe: concept
-      Orange Ellispe: concept with sense
+      Orange Ellispe: predict with sense
+      Black Ellispe: constant
       Blue Rectangle: named entity
 ![alt tag](https://github.com/panx27/amr-reader/blob/master/docs/example.png)
 

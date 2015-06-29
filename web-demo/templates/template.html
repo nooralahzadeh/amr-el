@@ -1,0 +1,52 @@
+$def with (form)
+
+<form name="main" method="post">
+$if not form.valid: <p class="error">Try again, AmeriCAN:</p>
+$:form.render()
+<input type="submit" />    </form>
+
+<br>
+<br>
+<br>
+
+<p>
+	<strong>Input</strong>
+</p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Format:
+</p>
+<pre class="prettyprint lang-js">         # ::id foo
+         # ::snt bar
+         # ::save-date baz
+         (
+           AMR ...
+                   )</pre>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Accept multiple sentences
+</p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Document-level coherence: name coherence based on document ID
+</p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Discourse-level coherence: consider all input sentences are coherent
+</p>
+
+<p>
+	<strong>Output</strong>&nbsp;
+</p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Link each AMR name entity (<code>:name</code> role) to the corresponding Wikipedia title ('-' if the Wiki page does not exist)
+</p>
+<p>
+	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Format:
+</p>
+<p>
+	<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;AMR</strong>: Add top 1 candidate for each name entity into original AMR (<code>:wiki</code> role)
+</p>
+<p>
+	<strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;JSON</strong>: return all candidates in JSON format
+</p>
+	<br />
+	<br />
+	<br />
+<p><font face="arial">If you would like to cite this work, please cite the following publication: <br><a href="http://nlp.cs.rpi.edu/paper/amrel.pdf">Unsupervised Entity Linking with Abstract Meaning Representation</a>. </font></p>
