@@ -38,6 +38,3 @@ def main(amr_input, filename, output_path):
     amr_table = amr.get_amr_table_str(amr_input)
     linking(amr_table)
     output.html(amr_table, filename, output_path)
-
-if __name__ == '__main__':
-    main(open('./test', 'r').read(), 'foo', './')

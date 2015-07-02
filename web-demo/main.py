@@ -25,7 +25,6 @@ class index:
         output_format = webinput['output']
         coherence_level = webinput['coherence']
         amr_input = str(webinput['input'])
-        # amrel.linking(amr_input, output_format, coherence_level)
         amrel.main(amr_input, 'output', './')
         return '<html>\n%s\n<html>\n' % open('./output.html').read()
 
@@ -37,7 +36,7 @@ class linking:
 
 class graphs:
     def GET(self, name):
-        ext = name.split(".")[-1] # Gather extension
+        ext = name.split(".")[-1]
 
         cType = {
             "png":"graphs/png",
@@ -45,17 +44,19 @@ class graphs:
             "gif":"graphs/gif",
             "ico":"graphs/x-icon" }
 
-        if name in os.listdir('graphs'):  # Security
-            web.header("Content-Type", cType[ext]) # Set the Header
+        if name in os.listdir('graphs'):
+            web.header("Content-Type", cType[ext])
             return open('graphs/%s'%name,"rb").read()
         else:
             raise web.notfound()
 
 text = form.Form(
-    form.Textarea('input', rows=30, cols=80, value=open('default_input').read()),
-    form.Dropdown('coherence', [('doc', 'Document-level'),
-                                ('dis', 'Discourse-level')]),
-    form.Dropdown('output', [('amr', 'AMR'), ('json', 'JSON')]),
+    form.Textarea('input', rows=30, cols=80, value=open('default').read()),
+    # form.Dropdown('coherence', [('doc', 'Document-level'),
+    #                             ('dis', 'Discourse-level')]),
+    # form.Dropdown('output', [('amr', 'AMR'), ('json', 'JSON')]),
+    form.Dropdown('coherence', [('doc', 'Document-level')]),
+    form.Dropdown('output', [('amr', 'AMR')]),
 )
 
 if __name__ == "__main__":

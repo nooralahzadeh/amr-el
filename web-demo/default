@@ -113,19 +113,6 @@
       :ARG1 (d / drop-04
             :ARG0 (p / person :name (n / name :op1 "Mitt"))))
 
-# ::id DF-170-181103-888_2382.9 ::date 2013-09-16T08:09:31 ::annotator LDC-AMR-03 ::preferred
-# ::snt Ok, my answer is no one and Obama wins the GE.
-# ::save-date Mon Sep 16, 2013 ::file DF-170-181103-888_2382_9.txt
-(a / answer-01
-      :ARG0 (i / i)
-      :ARG2 (a2 / and
-            :op1 (o / one
-                  :quant (n / none))
-            :op2 (w / win-01
-                  :ARG0 (p / person :name (n2 / name :op1 "Obama"))
-                  :ARG1 (e / event :name (n3 / name :op1 "GE"))))
-      :mod (o2 / ok))
-
 # ::id DF-170-181103-888_2382.10 ::date 2013-09-16T08:12:43 ::annotator LDC-AMR-03 ::preferred
 # ::snt The only one with any reason to will be Newt, but I don't think that he will.
 # ::save-date Mon Sep 16, 2013 ::file DF-170-181103-888_2382_10.txt
@@ -139,3 +126,4 @@
             :ARG0 (i / i)
             :ARG1 (w / will
                   :mod (h / he))))
+
